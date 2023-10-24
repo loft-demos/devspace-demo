@@ -1,13 +1,5 @@
 version: v2beta1
-name: api-framework
-dependencies:
-  auth: 
-    path: ../auth
-    pipeline: create-external-service
-  core: 
-    path: ../core
-    pipeline: deploy
-
+name: auth-golang
 
 imports:
   # local path example; could also be a git repository
@@ -37,12 +29,16 @@ deployments:
               # secret for connecting to Kafka provide by Loft synced secret - possibly with Vault integration
               - name: KAFKA_CHANNEL
                 value: dev-${LOFT_USERNAME}
-              - name: KAFKA_PASSWORD
-                value: $(loft get secret -p api kafka.devpassword)
               
         service:
           ports:
             - port: 8080
+  external-service:
+    # This deployment uses `helm` but you can also define `kubectl` deployments or kustomizations
+    kubectl:
+      manifests:
+        - "external-service.yaml"
+
 
 # This is a list of `dev` containers that are based on the containers created by your deployments
 dev:
