@@ -5,4 +5,4 @@ metadata:
   namespace: api
 spec:
   type: ExternalName
-  externalName: api.staging.svc
+  externalName: api-staging.staging.svc.cluster.local

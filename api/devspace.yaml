@@ -8,8 +8,41 @@ images:
     image: kmadel/api
     dockerfile: ./Dockerfile
 
+pipelines:
+  # Override the default pipeline for 'devspace dev'
+  dev: |-
+    kubectl delete svc api -n api --ignore-not-found=true
+    run_dependencies --all
+    ensure_pull_secrets --all
+    build_images --all
+    create_deployments --all --except api-staging
+    start_dev --all
+
 # This is a list of `deployments` that DevSpace can create for this project
 deployments:
+  api-staging:
+    namespace: staging    
+    # This deployment uses `helm` but you can also define `kubectl` deployments or kustomizations
+    helm:
+      # We are deploying this project with the Helm chart you provided
+      chart:
+        name: component-chart
+        repo: https://charts.devspace.sh
+      # Under `values` we can define the values for this Helm chart used during `helm install/upgrade`
+      # You may also use `valuesFiles` to load values from files, e.g. valuesFiles: ["values.yaml"]
+      values:
+        containers:
+          - image: kmadel/api:latest
+            env:
+              # secret for connecting to Kafka provide by Loft synced secret - possibly with Vault integration
+              - name: KAFKA_CHANNEL
+                value: dev-${LOFT_USERNAME}
+              
+        service:
+          ports: 
+            - name: staging
+              port: 80
+              containerPort: 8080
   api:
     namespace: api
     # This deployment uses `helm` but you can also define `kubectl` deployments or kustomizations
@@ -30,11 +63,14 @@ deployments:
               
         service:
           ports:
-            - port: 8081
+            - name: http
+              port: 80
+              containerPort: 8080
 
 # This is a list of `dev` containers that are based on the containers created by your deployments
 dev:
   api:
+    name: api
     namespace: api
     # Search for the container that runs this image
     imageSelector: kmadel/api

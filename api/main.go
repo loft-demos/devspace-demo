@@ -7,7 +7,7 @@ import (
 
 func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, `local api response`)
+		fmt.Fprintf(w, `local dev TEST api response`)
 	})
 
 	fs := http.FileServer(http.Dir("static/"))

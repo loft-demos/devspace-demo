@@ -3,10 +3,10 @@ images:
     api:
         imageConfigHash: 63faef5898027bd06708e40d0977a22a1bf83c006fdb7032a920ef20235ad8f5
         dockerfileHash: 7ef0b6f95c483750ae357ba1cd743fffe2af1de2609eb02d468a16e7be51953a
-        contextHash: 3b902b219a0fe3853fac19876c27808d5f59ed53b467dd4e9836930826cbcc3d
+        contextHash: 2a74d8ba2c4865909d93d2a2a4d50e1b6178dcd3c844718f4ce0e6061386628a
         imageName: kmadel/api
         localRegistryImageName: localhost:31129/kmadel/api
-        tag: BleJtQE
+        tag: loEfiBD
     app:
         imageConfigHash: e94f0b8b0c7c64d4aa313dc78c589d78ccd414f17534dfad77812feffc7f9e69
         dockerfileHash: 7ef0b6f95c483750ae357ba1cd743fffe2af1de2609eb02d468a16e7be51953a

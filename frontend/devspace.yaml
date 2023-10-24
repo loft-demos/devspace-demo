@@ -5,6 +5,15 @@ dependencies:
    api:
      path: ../api
 
+pipelines:
+  # Override the default pipeline for 'devspace dev'
+  dev-stage: |-
+    ensure_pull_secrets --all
+    build_images --all
+    create_deployments --all          # 2. Deploy Helm charts and manifests specfied as "deployments"
+    start_dev frontend 
+    kubectl apply -f external-service.yaml
+
 # This is a list of `images` that DevSpace can build for this project
 # We recommend to skip image building during development (devspace dev) as much as possible
 images:

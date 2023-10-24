@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	response, error := http.Get("http://api.api.svc.cluster.local:8080")
+	response, error := http.Get("http://api.api.svc.cluster.local")
 	if error != nil {
 	   fmt.Println(error)
 	}
