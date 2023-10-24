@@ -1,0 +1,8 @@
+{"level":"error","msg":"Runtime error occurred: error closing listener: close tcp4 127.0.0.1:2345: use of closed network connection","time":"2023-10-24T16:03:08-04:00"}
+{"level":"error","msg":"Runtime error occurred: error closing listener: close tcp6 [::1]:2345: use of closed network connection","time":"2023-10-24T16:03:08-04:00"}
+{"level":"error","msg":"Runtime error occurred: error closing listener: close tcp4 127.0.0.1:8080: use of closed network connection","time":"2023-10-24T16:03:08-04:00"}
+{"level":"error","msg":"Runtime error occurred: error closing listener: close tcp6 [::1]:8080: use of closed network connection","time":"2023-10-24T16:03:08-04:00"}
+{"level":"error","msg":"Runtime error occurred: error closing listener: close tcp4 127.0.0.1:2345: use of closed network connection","time":"2023-10-24T16:03:49-04:00"}
+{"level":"error","msg":"Runtime error occurred: error closing listener: close tcp6 [::1]:2345: use of closed network connection","time":"2023-10-24T16:03:49-04:00"}
+{"level":"error","msg":"Runtime error occurred: error closing listener: close tcp4 127.0.0.1:2345: use of closed network connection","time":"2023-10-24T16:03:49-04:00"}
+{"level":"error","msg":"Runtime error occurred: error closing listener: close tcp4 127.0.0.1:10991: use of closed network connection","time":"2023-10-24T16:03:49-04:00"}

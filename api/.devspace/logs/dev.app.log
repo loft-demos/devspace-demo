@@ -1,0 +1,6 @@
+{"level":"info","msg":"Inject devspacehelper...","time":"2023-10-24T16:01:59-04:00"}
+{"level":"info","msg":"Start syncing","time":"2023-10-24T16:02:03-04:00"}
+{"level":"info","msg":"Downstream - Initial sync completed","time":"2023-10-24T16:02:05-04:00"}
+{"level":"info","msg":"Upstream - Upload 4 create change(s) (Uncompressed ~4.53 KB)","time":"2023-10-24T16:02:06-04:00"}
+{"level":"info","msg":"Upstream - Successfully processed 4 change(s)","time":"2023-10-24T16:02:06-04:00"}
+{"level":"info","msg":"Upstream - Initial sync completed","time":"2023-10-24T16:02:07-04:00"}

@@ -1,0 +1,16 @@
+{"level":"info","msg":"dev:app Waiting for pod to become ready...","time":"2023-10-24T16:01:55-04:00"}
+{"level":"info","msg":"dev:app Selected pod app-devspace-6bbfb55744-bvxwf","time":"2023-10-24T16:01:57-04:00"}
+{"level":"info","msg":"dev:app open  Opening 'http://localhost:8080' as soon as application will be started","time":"2023-10-24T16:01:57-04:00"}
+{"level":"info","msg":"dev:app ports Port forwarding started on: 2345 -\u003e 2345, 8080 -\u003e 8080","time":"2023-10-24T16:01:58-04:00"}
+{"level":"info","msg":"dev:app sync  Sync started on: ./ \u003c-\u003e ./","time":"2023-10-24T16:02:03-04:00"}
+{"level":"info","msg":"dev:app sync  Waiting for initial sync to complete","time":"2023-10-24T16:02:03-04:00"}
+{"level":"info","msg":"dev:app sync  Initial sync completed","time":"2023-10-24T16:02:07-04:00"}
+{"level":"info","msg":"dev:app ssh   Port forwarding started on: 10991 -\u003e 8022","time":"2023-10-24T16:02:08-04:00"}
+{"level":"info","msg":"dev:app proxy Port forwarding started on: 10674 \u003c- 10567","time":"2023-10-24T16:02:11-04:00"}
+{"level":"info","msg":"dev:app ssh   Use 'ssh app.api.devspace' to connect via SSH","time":"2023-10-24T16:02:11-04:00"}
+{"level":"info","msg":"dev:app term  Opening shell to container-0:app-devspace-6bbfb55744-bvxwf (pod:container)","time":"2023-10-24T16:02:12-04:00"}
+{"level":"error","msg":"dev:app ports Restarting because: error creating error stream for port 8080 -\u003e 8080: Timeout occurred","time":"2023-10-24T16:02:33-04:00"}
+{"level":"info","msg":"dev:app ports Port forwarding started on: 2345 -\u003e 2345, 8080 -\u003e 8080","time":"2023-10-24T16:02:34-04:00"}
+{"level":"info","msg":"dev:app open  Successfully opened http://localhost:8080","time":"2023-10-24T16:02:38-04:00"}
+{"level":"error","msg":"dev:app ports Restarting because: error creating forwarding stream for port 8080 -\u003e 8080: Timeout occurred","time":"2023-10-24T16:03:08-04:00"}
+{"level":"info","msg":"dev:app ports Port forwarding started on: 2345 -\u003e 2345, 8080 -\u003e 8080","time":"2023-10-24T16:03:09-04:00"}

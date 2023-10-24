@@ -1,23 +1,21 @@
 version: v2beta1
-name: api-framework
-dependencies:
-  auth: 
-    path: ../auth
-  core: 
-    path: ../core
-    pipeline: deploy
+name: frontend
 
+dependencies:
+   api:
+     path: ../api
 
 # This is a list of `images` that DevSpace can build for this project
 # We recommend to skip image building during development (devspace dev) as much as possible
 images:
-  app:
-    image: kmadel/app
+  frontend:
+    image: kmadel/frontend
     dockerfile: ./Dockerfile
 
 # This is a list of `deployments` that DevSpace can create for this project
 deployments:
-  app:
+  frontend:
+    namespace: frontend
     # This deployment uses `helm` but you can also define `kubectl` deployments or kustomizations
     helm:
       # We are deploying this project with the Helm chart you provided
@@ -28,13 +26,13 @@ deployments:
       # You may also use `valuesFiles` to load values from files, e.g. valuesFiles: ["values.yaml"]
       values:
         containers:
-          - image: kmadel/app:latest
+          - image: kmadel/frontend:latest
             env:
               # secret for connecting to Kafka provide by Loft synced secret - possibly with Vault integration
               - name: KAFKA_CHANNEL
                 value: dev-${LOFT_USERNAME}
               - name: KAFKA_PASSWORD
-                value: $(loft get secret -p api kafka.devpassword) # replace with project secret mapped to vcluster
+                value: test-123 # replace with project secret mapped to vcluster
               
         service:
           ports:
@@ -42,9 +40,10 @@ deployments:
 
 # This is a list of `dev` containers that are based on the containers created by your deployments
 dev:
-  app:
+  frontend:
+    namespace: frontend
     # Search for the container that runs this image
-    imageSelector: kmadel/app
+    imageSelector: kmadel/frontend
     # Replace the container image with this dev-optimized image (allows to skip image building during development)
     devImage: ghcr.io/loft-sh/devspace-containers/go:1.18-alpine
     # Sync files between the local filesystem and the development container
