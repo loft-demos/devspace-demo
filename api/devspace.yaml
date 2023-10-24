@@ -30,7 +30,7 @@ deployments:
               
         service:
           ports:
-            - port: 8080
+            - port: 8081
 
 # This is a list of `dev` containers that are based on the containers created by your deployments
 dev:
@@ -59,10 +59,10 @@ dev:
     # Forward the following ports to be able access your application via localhost
     ports:
       - port: "2345"
-      - port: "8080"
+      - port: "8081"
     # Open the following URLs once they return an HTTP status code other than 502 or 503
     open:
-      - url: http://localhost:8080
+      - url: http://localhost:8081
 
 # Use the `commands` section to define repeatable dev workflows for this project 
 commands:
