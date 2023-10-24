@@ -1,9 +1,13 @@
 version: v2beta1
-name: auth-golang
+name: api-framework
+dependencies:
+  auth: 
+    path: ../auth
+  core: 
+    path: ../core
+    pipeline: deploy
 
-imports:
-  # local path example; could also be a git repository
-  - path: ../common/devspace.yaml
+
 # This is a list of `images` that DevSpace can build for this project
 # We recommend to skip image building during development (devspace dev) as much as possible
 images:
@@ -29,16 +33,12 @@ deployments:
               # secret for connecting to Kafka provide by Loft synced secret - possibly with Vault integration
               - name: KAFKA_CHANNEL
                 value: dev-${LOFT_USERNAME}
+              - name: KAFKA_PASSWORD
+                value: $(loft get secret -p api kafka.devpassword) # replace with project secret mapped to vcluster
               
         service:
           ports:
             - port: 8080
-  external-service:
-    # This deployment uses `helm` but you can also define `kubectl` deployments or kustomizations
-    kubectl:
-      manifests:
-        - "external-service.yaml"
-
 
 # This is a list of `dev` containers that are based on the containers created by your deployments
 dev:
