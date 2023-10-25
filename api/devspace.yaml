@@ -23,6 +23,7 @@ pipelines:
     build_images --all
     create_deployments api \
       --set=namespace=staging
+    kubectl delete service api -n api --ignore-not-found
     create_deployments api-staging
 
 # This is a list of `deployments` that DevSpace can create for this project
