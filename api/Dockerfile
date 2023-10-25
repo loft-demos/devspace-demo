@@ -31,4 +31,4 @@ COPY --from=build /app/main /
 EXPOSE 8080
 
 # Container start command for production
-CMD ["/main"]
+ENTRYPOINT ["/main"]
