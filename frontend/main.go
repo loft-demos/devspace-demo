@@ -2,27 +2,27 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"net/http"
-	"io/ioutil"
 )
 
 func main() {
-	response, error := http.Get("http://api.api.svc.cluster.local")
-	if error != nil {
-	   fmt.Println(error)
-	}
-
-	// read response body
-	body, error := ioutil.ReadAll(response.Body)
-	if error != nil {
-	   fmt.Println(error)
-	}
-	// close response body
-	response.Body.Close()
-	
-	API_response := string(body)
-
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		response, err := http.Get("http://api.api")
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		defer response.Body.Close()
+
+		// read response body
+		responseBody, err := io.ReadAll(response.Body)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
 		fmt.Fprintf(w, `
 		<html>
 			<head>
@@ -40,7 +40,7 @@ func main() {
 				</section>
 			</body>
 		</html>
-		`, API_response)
+		`, string(responseBody))
 	})
 
 	fs := http.FileServer(http.Dir("static/"))

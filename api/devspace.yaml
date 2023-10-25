@@ -11,38 +11,28 @@ images:
 pipelines:
   # Override the default pipeline for 'devspace dev'
   dev: |-
-    kubectl delete svc api -n api --ignore-not-found=true
     run_dependencies --all
     ensure_pull_secrets --all
     build_images --all
     create_deployments --all --except api-staging
-    start_dev --all
+    start_dev api
+
+  deploy: |-
+    run_dependencies --all
+    ensure_pull_secrets --all
+    build_images --all
+    create_deployments api \
+      --set=namespace=staging
+    kubectl delete service api -n api --ignore-not-found
+    create_deployments api-staging
 
 # This is a list of `deployments` that DevSpace can create for this project
 deployments:
   api-staging:
-    namespace: staging    
-    # This deployment uses `helm` but you can also define `kubectl` deployments or kustomizations
-    helm:
-      # We are deploying this project with the Helm chart you provided
-      chart:
-        name: component-chart
-        repo: https://charts.devspace.sh
-      # Under `values` we can define the values for this Helm chart used during `helm install/upgrade`
-      # You may also use `valuesFiles` to load values from files, e.g. valuesFiles: ["values.yaml"]
-      values:
-        containers:
-          - image: kmadel/api:latest
-            env:
-              # secret for connecting to Kafka provide by Loft synced secret - possibly with Vault integration
-              - name: KAFKA_CHANNEL
-                value: dev-${LOFT_USERNAME}
-              
-        service:
-          ports: 
-            - name: staging
-              port: 80
-              containerPort: 8080
+    namespace: api
+    kubectl:
+      manifests:
+        - external-service.yaml
   api:
     namespace: api
     # This deployment uses `helm` but you can also define `kubectl` deployments or kustomizations
@@ -75,14 +65,25 @@ dev:
     # Search for the container that runs this image
     imageSelector: kmadel/api
     # Replace the container image with this dev-optimized image (allows to skip image building during development)
-    devImage: ghcr.io/loft-sh/devspace-containers/go:1.18-alpine
+    devImage: ghcr.io/loft-sh/devspace-containers/go:1.21-alpine
     # Sync files between the local filesystem and the development container
+    command:
+      - go
+      - run
+      - main.go
     sync:
       - path: ./
-        uploadExcludeFile: .dockerignore
+        excludePaths:
+          - '**'
+          - '!**/*.go'
+          - '!go.mod'
+          - '!go.sum'
+        onUpload:
+          restartContainer: true
+    logs: {}
     # Open a terminal and use the following command to start it
-    terminal:
-      command: ./devspace_start.sh
+#    terminal:
+#      command: ./devspace_start.sh
     # Inject a lightweight SSH server into the container (so your IDE can connect to the remote dev env)
     ssh:
       enabled: true
@@ -95,22 +96,8 @@ dev:
     # Forward the following ports to be able access your application via localhost
     ports:
       - port: "2345"
-      - port: "8081"
+      - port: "8081:8080"
     # Open the following URLs once they return an HTTP status code other than 502 or 503
     open:
       - url: http://localhost:8081
 
-# Use the `commands` section to define repeatable dev workflows for this project 
-commands:
-  migrate-db:
-    command: |-
-      echo 'This is a cross-platform, shared command that can be used to codify any kind of dev task.'
-      echo 'Anyone using this project can invoke it via "devspace run migrate-db"'
-
-# Define dependencies to other projects with a devspace.yaml
-# dependencies:
-#   api:
-#     git: https://...  # Git-based dependencies
-#     tag: v1.0.0
-#   ui:
-#     path: ./ui        # Path-based dependencies (for monorepos)
