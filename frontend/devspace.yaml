@@ -5,14 +5,13 @@ dependencies:
    api:
      path: ../api
 
-pipelines:
-  # Override the default pipeline for 'devspace dev'
-  dev-stage: |-
-    ensure_pull_secrets --all
-    build_images --all
-    create_deployments --all          # 2. Deploy Helm charts and manifests specfied as "deployments"
-    start_dev frontend 
-    kubectl apply -f external-service.yaml
+#pipelines:
+#  # Override the default pipeline for 'devspace dev'
+#  dev-stage: |-
+#    ensure_pull_secrets --all
+#    build_images --all
+#    create_deployments --all
+#    start_dev --all
 
 # This is a list of `images` that DevSpace can build for this project
 # We recommend to skip image building during development (devspace dev) as much as possible
@@ -54,7 +53,7 @@ dev:
     # Search for the container that runs this image
     imageSelector: kmadel/frontend
     # Replace the container image with this dev-optimized image (allows to skip image building during development)
-    devImage: ghcr.io/loft-sh/devspace-containers/go:1.18-alpine
+    devImage: ghcr.io/loft-sh/devspace-containers/go:1.21-alpine
     # Sync files between the local filesystem and the development container
     sync:
       - path: ./
@@ -78,18 +77,3 @@ dev:
     # Open the following URLs once they return an HTTP status code other than 502 or 503
     open:
       - url: http://localhost:8080
-
-# Use the `commands` section to define repeatable dev workflows for this project 
-commands:
-  migrate-db:
-    command: |-
-      echo 'This is a cross-platform, shared command that can be used to codify any kind of dev task.'
-      echo 'Anyone using this project can invoke it via "devspace run migrate-db"'
-
-# Define dependencies to other projects with a devspace.yaml
-# dependencies:
-#   api:
-#     git: https://...  # Git-based dependencies
-#     tag: v1.0.0
-#   ui:
-#     path: ./ui        # Path-based dependencies (for monorepos)
