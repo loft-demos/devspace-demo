@@ -10,7 +10,7 @@ func main() {
 	text := flag.String("text", "UNSET", "text api response")
 	flag.Parse()
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "api response - %s", *text)
+		fmt.Fprintf(w, "test api response - %s", *text)
 	})
 
 	fs := http.FileServer(http.Dir("static/"))
