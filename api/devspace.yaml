@@ -46,6 +46,8 @@ deployments:
       values:
         containers:
           - image: kmadel/api:latest
+            args:
+              - --text=echo v1 local
             env:
               # secret for connecting to Kafka provide by Loft synced secret - possibly with Vault integration
               - name: KAFKA_CHANNEL

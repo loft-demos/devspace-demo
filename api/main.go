@@ -3,11 +3,14 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"flag"
 )
 
 func main() {
+	text := flag.String("text", "UNSET", "text api response")
+	flag.Parse()
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, `local dev TEST api response`)
+		fmt.Fprintf(w, "api response - %s", *text)
 	})
 
 	fs := http.FileServer(http.Dir("static/"))
