@@ -1,9 +1,9 @@
 version: v2beta1
 name: frontend
 
-dependencies:
-   api:
-     path: ../api
+#dependencies:
+#   api:
+#     path: ../api
 
 #pipelines:
 #  # Override the default pipeline for 'devspace dev'
